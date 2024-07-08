@@ -75,7 +75,6 @@ if not st.session_state.logged_in:
         if authenticate(username, password):
             st.session_state.logged_in = True
             st.session_state.username = username
-            st.button('Login')
             st.success('Logged in successfully')
         else:
             st.error('Invalid username or password')
