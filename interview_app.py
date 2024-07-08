@@ -1,7 +1,9 @@
-import streamlit as st
+mport streamlit as st
 import pandas as pd
 import sqlite3
 from datetime import datetime
+import os
+import subprocess
 
 # Initialize the in-memory SQLite database
 conn = sqlite3.connect(':memory:')
@@ -29,25 +31,29 @@ employees = [
 cursor.executemany('INSERT INTO employees VALUES (?, ?, ?, ?)', employees)
 conn.commit()
 
-# Create a table to log access
-cursor.execute('''
-CREATE TABLE access_log (
-    timestamp TEXT,
-    username TEXT
-)
-''')
+# Define log file path
+log_file_path = 'access_log.txt'
 
-# Function to log access
-def log_access(username):
+# Function to log access to a file
+def log_access_to_file(username):
     timestamp = datetime.now().strftime('%Y-%m-%d %H:%M:%S')
-    cursor.execute('INSERT INTO access_log VALUES (?, ?)', (timestamp, username))
-    conn.commit()
+    with open(log_file_path, 'a') as log_file:
+        log_file.write(f'{timestamp}, {username}\n')
+
+# Function to commit log file to GitHub
+def commit_log_to_github():
+    try:
+        subprocess.run(['git', 'add', log_file_path], check=True)
+        subprocess.run(['git', 'commit', '-m', 'Update access log'], check=True)
+        subprocess.run(['git', 'push'], check=True)
+    except subprocess.CalledProcessError as e:
+        st.error(f'Error during Git operations: {e}')
 
 # User authentication
 def authenticate(username, password):
     # In a real application, you should use a secure method to store and verify passwords
-    valid_username = "admin"
-    valid_password = "password123"
+    valid_username = "cand1"
+    valid_password = "1357"
     return username == valid_username and password == valid_password
 
 # Streamlit UI
@@ -64,7 +70,8 @@ if not st.session_state.logged_in:
         if authenticate(username, password):
             st.session_state.logged_in = True
             st.session_state.username = username
-            log_access(username)
+            log_access_to_file(username)
+            commit_log_to_github()
             st.success('Logged in successfully')
         else:
             st.error('Invalid username or password')
@@ -81,11 +88,6 @@ else:
             st.write(result)
         except Exception as e:
             st.error(f'Error: {e}')
-
-    # Show access log
-    if st.button('Show Access Log'):
-        log_df = pd.read_sql_query('SELECT * FROM access_log', conn)
-        st.write(log_df)
 
     # Logout button
     if st.button('Logout'):
