@@ -28,12 +28,26 @@ def save_to_csv_and_commit(df, csv_path):
     except subprocess.CalledProcessError as e:
         st.error(f'Error during Git operations: {e}')
 
+# Dictionary to store usernames and passwords
+users = {
+    "test": "EVS2024sql",
+    "leo": "leo_EVS",
+    "alan": "alaaan2024",
+    "admin": "kaczka",
+    "candidate": "SQLtest1"
+    # Add more users as needed
+}
+
 # User authentication
 def authenticate(username, password):
-    # In a real application, you should use a secure method to store and verify passwords
-    valid_username = "admin"
-    valid_password = "password123"
-    return username == valid_username and password == valid_password
+    # Check if the username exists in the dictionary
+    if username in users:
+        # Retrieve the stored password for the username
+        stored_password = users[username]
+        # Check if the provided password matches the stored password
+        if password == stored_password:
+            return True  # Authentication successful
+    return False  # Authentication failed
 
 # Streamlit UI
 st.title('SQL Test')
