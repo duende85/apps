@@ -82,9 +82,9 @@ else:
             
             # Save changes to the database back to CSV if modifying queries are detected
             if query.strip().lower().startswith(('update', 'delete', 'insert')):
+                customers_df_updated = pd.read_sql_query('SELECT * FROM customers', conn)
+                orders_df_updated = pd.read_sql_query('SELECT * FROM orders', conn)
                 if username == "admin":
-                    customers_df_updated = pd.read_sql_query('SELECT * FROM customers', conn)
-                    orders_df_updated = pd.read_sql_query('SELECT * FROM orders', conn)
                     save_to_csv_and_commit(customers_df_updated, customers_csv_path)
                     save_to_csv_and_commit(orders_df_updated, orders_csv_path)
         except Exception as e:
