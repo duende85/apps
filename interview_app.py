@@ -36,7 +36,7 @@ def authenticate(username, password):
     return username == valid_username and password == valid_password
 
 # Streamlit UI
-st.title('SQL Query Emulator')
+st.title('SQL Test')
 
 # Login form
 if 'logged_in' not in st.session_state:
@@ -54,6 +54,7 @@ if not st.session_state.logged_in:
             st.error('Invalid username or password')
 else:
     st.write(f'Welcome, {st.session_state.username}!')
+    st.write('You are a data analyst at an e-commerce company. Your manager has asked you to analyze the top orders placed by customers in the North America region. You need to identify the most recent order for each customer in North America and provide details about the customer and their order.')
     
     # Input for SQL query
     query = st.text_area('Enter your SQL query here:', 'SELECT * FROM customers')
