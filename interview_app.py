@@ -36,7 +36,7 @@ def authenticate(username, password):
     return username == valid_username and password == valid_password
 
 # Streamlit UI
-st.title('SQL Query Emulator with Authentication')
+st.title('SQL Query Emulator')
 
 # Login form
 if 'logged_in' not in st.session_state:
