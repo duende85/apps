@@ -63,6 +63,7 @@ else:
         try:
             result = pd.read_sql_query(query, conn)
             st.write(result)
+            st.write(query)
             
             # Save changes to the database back to CSV if modifying queries are detected
             if query.strip().lower().startswith(('update', 'delete', 'insert')):
