@@ -42,8 +42,8 @@ def save_to_csv_and_commit(df, csv_path):
 
 # Dictionary to store usernames and passwords
 users = {
-    "test": "EVS2024sql",
-    "leo": "leoleo",
+    "test1": "EVS2024sql",
+    "leo: "leoleo",
     "alan": "alaaan2024",
     "admin": "kaczka",
     "candidate": "SQLtest1"
@@ -75,6 +75,7 @@ if not st.session_state.logged_in:
         if authenticate(username, password):
             st.session_state.logged_in = True
             st.session_state.username = username
+            st.button('Login')
             st.success('Logged in successfully')
         else:
             st.error('Invalid username or password')
