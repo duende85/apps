@@ -1,4 +1,4 @@
-order_id,customer_id,order_date,amount
+order_id,customer_id,order_date,total_amount
 101,55,2.02.2024 11:55:22,42020
 102,158,6.12.2023 05:23:12,158246
 103,388,22.05.2024 18:16:58,31394
