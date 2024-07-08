@@ -46,7 +46,7 @@ users = {
     "leo": "leoleo",
     "alan": "alaaan2024",
     "admin": "kaczka",
-    "candidate": "SQLtest1"
+    "candidate": "SQLtest978"
     # Add more users as needed
 }
 
