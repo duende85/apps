@@ -31,7 +31,7 @@ def save_to_csv_and_commit(df, csv_path):
 # Dictionary to store usernames and passwords
 users = {
     "test": "EVS2024sql",
-    "leo": "leo_EVS",
+    "leo": "leoleo",
     "alan": "alaaan2024",
     "admin": "kaczka",
     "candidate": "SQLtest1"
