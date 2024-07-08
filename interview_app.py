@@ -64,14 +64,12 @@ else:
             result = pd.read_sql_query(query, conn)
             st.write(result)
             
-            # Check if the user is "admin" before allowing modifications
-            if st.session_state.username == "admin" and query.strip().lower().startswith(('update', 'delete', 'insert')):
+            # Save changes to the database back to CSV if modifying queries are detected
+            if query.strip().lower().startswith(('update', 'delete', 'insert')):
                 customers_df_updated = pd.read_sql_query('SELECT * FROM customers', conn)
                 orders_df_updated = pd.read_sql_query('SELECT * FROM orders', conn)
                 save_to_csv_and_commit(customers_df_updated, customers_csv_path)
                 save_to_csv_and_commit(orders_df_updated, orders_csv_path)
-            elif query.strip().lower().startswith(('update', 'delete', 'insert')):
-                st.error('Only admin can modify the underlying tables.')
         except Exception as e:
             st.error(f'Error: {e}')
 
