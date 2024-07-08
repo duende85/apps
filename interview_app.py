@@ -49,6 +49,18 @@ def authenticate(username, password):
             return True  # Authentication successful
     return False  # Authentication failed
 
+# Use st.write with HTML and CSS to set the width
+st.write("""
+    <style>
+        .full-width {
+            max-width: 100%;
+        }
+    </style>
+""", unsafe_allow_html=True)
+
+# Use st.write to display content with the specified class
+st.write('<div class="full-width">Your content here</div>', unsafe_allow_html=True)
+
 # Streamlit UI
 st.title('SQL Test')
 
