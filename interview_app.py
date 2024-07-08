@@ -21,9 +21,13 @@ st.write('<div class="full-width">Your content here</div>', unsafe_allow_html=Tr
 customers_csv_path = 'customers.csv'
 orders_csv_path = 'orders.csv'
 
+
+
 # Load data from CSV files
 customers_df = pd.read_csv(customers_csv_path)
 orders_df = pd.read_csv(orders_csv_path)
+
+st.write(orders_df)
 
 # Initialize the in-memory SQLite database
 conn = sqlite3.connect(':memory:')
