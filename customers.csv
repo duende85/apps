@@ -1,0 +1,315 @@
+customer_id,customer_name,customer_region
+1, Juan Rodriguez,Europe
+2, Mei Chen,Asia
+3, Ahmed Khan,South America
+4, Ana Souza,Europe
+5, Yuri Petrov,North America
+6, Carmen Lopez,North America
+7, Takashi Yamamoto,North America
+8, Maria Silva,North America
+9, Alexei Ivanov,Europe
+10, Fatima Ali,Europe
+11, Lars Jensen,Asia
+12, Priya Patel,North America
+13, Antonio Rossi,Europe
+14, Ingrid Berg,Asia
+15, Alejandro Garcia,Asia
+16, Leila Mansour,South America
+17, Viktor Novak,ANZ
+18, Mei Ling,Europe
+19, Andrej Kuznetsov,Asia
+20, Anna Sokolova,South America
+21, José Fernandez,Europe
+22, Sanaa Abdel Nour,North America
+23, Giovanni Ferrari,North America
+24, Mia Johansson,North America
+25, Mohammad Abbas,North America
+26, Elena Kuznetsova,Europe
+27, Pedro Costa,Europe
+28, Isabella Rossi,Asia
+29, Yusuf Rahman,North America
+30, Li Wei,Europe
+31, Diego Hernandez,Asia
+32, Sophie Lefevre,Asia
+33, Ivan Volkov,South America
+34, Mei Wong,ANZ
+35, Ali Al-Mansour,Europe
+36, Ana Costa,North America
+37, Mikhail Ivanov,North America
+38, Chihiro Suzuki,North America
+39, Gabriela Ramos,North America
+40, Pavel Sokolov,Europe
+41, Mei Chen,Europe
+42, Jovan Jovanovic,Asia
+43, Katya Petrova,North America
+44, Lars Andersen,Europe
+45, Mei Li,Asia
+46, Ahmed Mahmoud,Asia
+47, Emilia Kovac,South America
+48, Santiago Ramirez,ANZ
+49, Mei Tanaka,Europe
+50, Ibrahim Khalifa,Asia
+51, Lucia Moretti,South America
+52, Sergei Popov,Europe
+53, Mei Xiang,North America
+54, Gustavo Santos,North America
+55, Mei Zhou,North America
+56, Anna Novakova,North America
+57, Aarav Patel,Europe
+58, Karolina Wojcik,Europe
+59, Javier Mendoza,Asia
+60, Yuki Tanaka,North America
+61, Rahul Sharma,Europe
+62, Mia Andersson,Asia
+63, Khaled Abdel-Rahman,Asia
+64, Sofia Costa,South America
+65, Ivan Petrov,ANZ
+66, Mei Liang,Asia
+67, Marco Rossi,South America
+68, Maya Cohen,Europe
+69, Sergey Volkov,North America
+70, Yui Takahashi,North America
+71, Juan Hernandez,North America
+72, Mei Sato,North America
+73, Amir Shah,Europe
+74, Camilla Svensson,Europe
+75, Pavel Ivanov,Asia
+76, Mei Nakamura,North America
+77, Ali Hassan,Europe
+78, Lucia Ferrari,Asia
+79, Alexei Smirnov,Asia
+80, Chiaki Yamamoto,South America
+81, Roberto Silva,ANZ
+82, Mei Wang,Asia
+83, Miguel Santos,South America
+84, Mei Kim,Europe
+85, Anwar Abdel-Rahman,North America
+86, Eva Novak,North America
+87, Dmitri Ivanov,North America
+88, Mei Fujimoto,North America
+89, Felipe Costa,Europe
+90, Mei Chen,Europe
+91, Leila Mansour,Asia
+92, Victor Kuznetsov,North America
+93, Sofia Sokolova,Europe
+94, Adil Khan,Asia
+95, Mei Zhang,Asia
+96, Pedro Fernandez,South America
+97, Elena Rossi,ANZ
+98, Mikhail Petrov,Europe
+99, Mei Tan,Asia
+100, Ahmed Al-Mansour,South America
+101, Ana Costa,Europe
+102, Ivan Ivanov,North America
+103, Mei Suzuki,North America
+104, Javier Ramirez,North America
+105, Mei Takahashi,North America
+106, Mei Kumar,Europe
+107, Fatima Ali,Europe
+108, Alexei Popov,Asia
+109, Mei Li,North America
+110, Karolina Wojcik,Europe
+111, Yusuf Rahman,Asia
+112, Mei Yamamoto,Asia
+113, Giovanni Ferrari,South America
+114, Mei Andersson,ANZ
+115, Diego Hernandez,Europe
+116, Mei Xiang,Asia
+117, Anna Novakova,South America
+118, Mohammad Abbas,Europe
+119, Mei Tanaka,North America
+120, Sophie Lefevre,North America
+121, Sergei Popov,North America
+122, Mei Zhou,North America
+123, Mei Petrova,Europe
+124, Mei Li,Europe
+125, Pedro Costa,Asia
+126, Mei Kim,North America
+127, Mei Hernandez,Europe
+128, Mei Sato,Asia
+129, Ahmed Shah,Asia
+130, Mei Svensson,South America
+131, Mei Ivanov,ANZ
+132, Mei Nakamura,Europe
+133, Lucia Ferrari,North America
+134, Mei Wang,North America
+135, Mei Santos,North America
+136, Amir Smirnov,North America
+137, Mei Yamamoto,Europe
+138, Roberto Silva,Europe
+139, Mei Fujimoto,Asia
+140, Miguel Santos,North America
+141,Peter Wolfgang Bayer,Europe
+142,Karl Meier,Asia
+143,Rajesh Kumar  ,Asia
+144,Anastasia Ivanova  ,South America
+145,Hassan Ali  ,ANZ
+146,Elena Petrova  ,Europe
+147,Luca Rossi  ,Asia
+148,Yuki Takahashi  ,South America
+149,Sergio Hernandez  ,Europe
+150,Mei Yamada  ,North America
+151,Amina Ndiaye  ,North America
+152,Andrei Popescu  ,North America
+153,Julia Schmidt  ,North America
+154,Ravi Gupta  ,Europe
+155,Natalia Kowalczyk  ,Europe
+156,Mohammed Rahman  ,Asia
+157,Elena Fernandez  ,North America
+158,Liam O'Connor  ,Europe
+159,Lina Abdel-Rahman  ,Asia
+160,Igor Smirnov  ,Asia
+161,Erika Silva  ,South America
+162,Omar El-Mansour  ,ANZ
+163,Leila Costa,Asia
+164,Kazuki Tanaka,South America
+165,Sophie Laurent,Europe
+166,Alejandro Mendoza,North America
+167,Svetlana Sokolova,North America
+168,Yusuf Khan  ,North America
+169,Anna Petrovna  ,North America
+170,Carlos da Silva  ,Europe
+171,Mei Nakamura  ,Europe
+172,Arjun Patel  ,Asia
+173,Lara Müller  ,North America
+174,Dmitri Ivanov  ,Europe
+175,Mei Wang  ,Asia
+176,Amir Ali  ,Asia
+177,Nadia Costa  ,South America
+178,Santiago Morales  ,ANZ
+179,Mei Chen  ,Asia
+180,Aditya Singh  ,South America
+181,Chiara Bianchi  ,Europe
+182,Antonio Gonzalez  ,North America
+183,Mei Tanaka  ,North America
+184,Ibrahim Ahmed  ,North America
+185,Anastasia Sokolova  ,North America
+186,Daniel Novak  ,Europe
+187,Mai Nguyen  ,Europe
+188,Omar Abdel-Meguid  ,Asia
+189,Alicia Fernandez  ,North America
+190,Kamil Nowak  ,Europe
+191,Sofia Santos  ,Asia
+192,Arnav Kapoor  ,Asia
+193,Elena Smirnova  ,South America
+194,Lucas Costa  ,ANZ
+195,Aisha Al-Farsi  ,Europe
+196,Piotr Kowalczyk  ,Asia
+197,Mei Suzuki  ,South America
+198,Lara Schmitt  ,Europe
+199,Raul Fernandez  ,North America
+200,Mei Takahashi  ,North America
+201,Karim Mansour  ,North America
+202,Olga Ivanova  ,North America
+203,Gabriel Silva  ,Europe
+204,Aiko Yamamoto  ,Europe
+205,Ismail Khan  ,Asia
+206,Luna Gonzalez  ,North America
+207,Filip Novak  ,Europe
+208,Mei Kim  ,Asia
+209,David Schmidt  ,Asia
+210,Mei Tan  ,South America
+211,Hamza Mahmoud  ,ANZ
+212,Sara Costa  ,Europe
+213,Mikhail Volkov  ,Asia
+214,Mei Chen  ,South America
+215,Anita Patel  ,Europe
+216,Artur Kuznetsov  ,North America
+217,Mei Sato  ,North America
+218,Amina Abdel-Rahman  ,North America
+219,Marco Ferrari  ,North America
+220,Mei Fujimoto  ,Europe
+221,Rana El-Mansour  ,Europe
+222,Mei Santos  ,Asia
+223,Emilija Petrovic  ,North America
+224,Yusuf Rahman  ,Europe
+225,Cristina da Silva  ,Asia
+226,Mei Yamamoto,Asia
+227,Certainly! Here are 70 more names and surnames from around the world:,South America
+228,Ana Souza,ANZ
+229,Liam Murphy  ,Europe
+230,Mei Nakamura  ,North America
+231,Anastasia Ivanova  ,North America
+232,Ravi Gupta  ,North America
+233,Elena Petrova  ,North America
+234,Luca Rossi  ,Europe
+235,Yuki Takahashi  ,Europe
+236,Sergio Hernandez  ,Asia
+237,Mei Yamada  ,North America
+238,Amina Ndiaye  ,Europe
+239,Andrei Popescu  ,Asia
+240,Julia Schmidt  ,Asia
+241,Rajesh Kumar  ,South America
+242,Natalia Kowalczyk  ,ANZ
+243,Mohammed Rahman  ,Europe
+244,Elena Fernandez  ,Asia
+245,Liam O'Connor  ,South America
+246,Lina Abdel-Rahman  ,Europe
+247,Igor Smirnov  ,North America
+248,Erika Silva  ,North America
+249,Omar El-Mansour  ,North America
+250,Leila Costa  ,North America
+251,Kazuki Tanaka  ,Europe
+252,Sophie Laurent  ,Europe
+253,Alejandro Mendoza  ,Asia
+254,Svetlana Sokolova  ,North America
+255,Yusuf Khan  ,Europe
+256,Anna Petrovna  ,Asia
+257,Carlos da Silva  ,Asia
+258,Mei Nakamura  ,South America
+259,Arjun Patel  ,ANZ
+260,Lara Müller  ,Asia
+261,Dmitri Ivanov  ,South America
+262,Mei Wang  ,Europe
+263,Amir Ali  ,North America
+264,Nadia Costa  ,North America
+265,Santiago Morales  ,North America
+266,Mei Chen  ,North America
+267,Aditya Singh  ,Europe
+268,Chiara Bianchi  ,Europe
+269,Antonio Gonzalez  ,Asia
+270,Mei Tanaka  ,North America
+271,Ibrahim Ahmed  ,Europe
+272,Anastasia Sokolova  ,Asia
+273,Daniel Novak  ,Asia
+274,Mai Nguyen  ,South America
+275,Omar Abdel-Meguid  ,ANZ
+276,Alicia Fernandez  ,Asia
+277,Kamil Nowak  ,South America
+278,Sofia Santos  ,Europe
+279,Arnav Kapoor  ,North America
+280,Elena Smirnova  ,North America
+281,Lucas Costa  ,North America
+282,Aisha Al-Farsi  ,North America
+283,Piotr Kowalczyk  ,Europe
+284,Mei Suzuki  ,Europe
+285,Lara Schmitt  ,Asia
+286,Raul Fernandez  ,North America
+287,Mei Takahashi  ,Europe
+288,Karim Mansour  ,Asia
+289,Olga Ivanova  ,Asia
+290,Gabriel Silva  ,South America
+291,Aiko Yamamoto  ,ANZ
+292,Ismail Khan  ,North America
+293,Luna Gonzalez  ,North America
+294,Filip Novak  ,North America
+295,Mei Kim  ,North America
+296,David Schmidt  ,North America
+297,Mei Tan  ,North America
+298,Hamza Mahmoud  ,North America
+299,Sara Costa  ,Africa
+300,Mikhail Volkov  ,Africa
+301,Mei Chen  ,North America
+302,Anita Patel  ,North America
+303,Artur Kuznetsov  ,North America
+304,Mei Sato  ,North America
+305,Amina Abdel-Rahman  ,North America
+306,Marco Ferrari  ,North America
+307,Mei Fujimoto  ,North America
+308,Rana El-Mansour  ,North America
+309,Mei Santos  ,North America
+310,Emilija Petrovic  ,North America
+311,Yusuf Rahman  ,North America
+312,Cristina da Silva  ,North America
+313, Viktor Novak,North America
+
