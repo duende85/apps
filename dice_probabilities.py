@@ -79,5 +79,5 @@ df["Numbers"] = df["Numbers"].apply(lambda x: ", ".join(map(str, x)))
 for col in df.columns[1:]:
     df[col] = df[col].apply(lambda x: f"{x:.2f}")
 
-# Display table using full container width, without extra info bar
-st.dataframe(df.reset_index(drop=True), use_container_width=True)
+# Display table larger vertically
+st.dataframe(df.reset_index(drop=True), use_container_width=True, height=700)
