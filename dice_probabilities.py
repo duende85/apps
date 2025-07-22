@@ -2,6 +2,15 @@ import streamlit as st
 import itertools
 import pandas as pd
 
+# Remove top padding via CSS
+st.markdown("""
+    <style>
+        .block-container {
+            padding-top: 1rem;
+        }
+    </style>
+""", unsafe_allow_html=True)
+
 st.title("4d6 Dice Combination Probabilities")
 st.write(
     "Calculate the probability of hitting pairs or triplets of numbers in a custom dice game. "
