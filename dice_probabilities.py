@@ -43,10 +43,10 @@ def calc_probs(combos, roll_to_gather, all_rolls, pow_max=10):
 
 # Sidebar filters
 combo_type = st.sidebar.radio("Show combinations of...", ("Pairs (2 numbers)", "Triplets (3 numbers)"))
-numbers_filter = st.sidebar.multiselect(
-    "Filter combinations to include only these numbers (leave empty to include all):",
+must_include = st.sidebar.multiselect(
+    "Show combinations that contain (optional):",
     options=all_numbers,
-    default=all_numbers
+    default=[]
 )
 min_p, max_p = st.sidebar.slider(
     "Probability range (P):",
@@ -58,11 +58,11 @@ min_p, max_p = st.sidebar.slider(
 comb_size = 2 if combo_type.startswith("Pairs") else 3
 combos = list(itertools.combinations(all_numbers, comb_size))
 
-# Filter combos to those containing only selected numbers
-if numbers_filter and len(numbers_filter) >= comb_size:
+# Filter combos to those containing at least all selected numbers
+if must_include:
     combos = [
         combo for combo in combos
-        if all(num in numbers_filter for num in combo)
+        if all(num in combo for num in must_include)
     ]
 
 results = calc_probs(combos, roll_to_gather, all_rolls)
@@ -82,6 +82,6 @@ for col in df.columns[1:]:
 st.dataframe(df.reset_index(drop=True), use_container_width=True)
 
 st.info(
-    "Change the filters on the left to explore probabilities for pairs or triplets! "
+    "Use the left sidebar to select combinations that must include certain numbers! "
     "The table shows P (probability) and its powers up to P^10."
 )
