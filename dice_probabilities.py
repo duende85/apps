@@ -52,11 +52,19 @@ def calc_probs(combos, roll_to_gather, all_rolls, pow_max=10):
 
 # Sidebar filters
 combo_type = st.sidebar.radio("Show combinations of...", ("Pairs (2 numbers)", "Triplets (3 numbers)"))
+
 must_include = st.sidebar.multiselect(
     "Show combinations that contain (optional):",
     options=all_numbers,
     default=[]
 )
+
+must_exclude = st.sidebar.multiselect(
+    "Exclude combinations that contain (optional):",
+    options=all_numbers,
+    default=[]
+)
+
 min_p, max_p = st.sidebar.slider(
     "Probability range (P):",
     min_value=0.0, max_value=1.0,
@@ -67,11 +75,18 @@ min_p, max_p = st.sidebar.slider(
 comb_size = 2 if combo_type.startswith("Pairs") else 3
 combos = list(itertools.combinations(all_numbers, comb_size))
 
-# Filter combos to those containing at least all selected numbers
+# Apply include filter
 if must_include:
     combos = [
         combo for combo in combos
         if all(num in combo for num in must_include)
+    ]
+
+# Apply exclude filter
+if must_exclude:
+    combos = [
+        combo for combo in combos
+        if all(num not in combo for num in must_exclude)
     ]
 
 results = calc_probs(combos, roll_to_gather, all_rolls)
