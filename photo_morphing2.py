@@ -38,8 +38,8 @@ def download_audio_from_youtube(url, output_path):
     audio_stream = yt.streams.filter(only_audio=True).order_by('abr').desc().first()
     temp_file = tempfile.NamedTemporaryFile(suffix=".mp4", delete=False).name
     audio_stream.download(output_path=os.path.dirname(temp_file), filename=os.path.basename(temp_file))
-    import moviepy.editor as mpe
-    clip = mpe.AudioFileClip(temp_file)
+    from moviepy.editor import AudioFileClip
+    clip = AudioFileClip(temp_file)
     clip.write_audiofile(output_path)
     clip.close()
     os.remove(temp_file)
@@ -51,17 +51,18 @@ if generate:
         st.error("Sube ambas imágenes.")
         st.stop()
 
-    # Carga y resize de imágenes
+    # Carga y ajuste de tamaño
     img1 = Image.open(f1).convert("RGB")
     img2 = Image.open(f2).convert("RGB")
     base_size = img1.size if auto_size else (int(width), int(height))
     img1 = img1.resize(base_size, Image.LANCZOS)
     img2 = img2.resize(base_size, Image.LANCZOS)
 
+    # Prepara arrays
     arr1 = np.array(img1, dtype=np.float32)
     arr2 = np.array(img2, dtype=np.float32)
 
-    # Genera frames interpolados
+    # Genera frames
     frames = []
     prog = st.progress(0)
     for i in range(frame_count):
@@ -70,45 +71,42 @@ if generate:
         frames.append(blended)
         prog.progress((i + 1) / frame_count)
 
-    # Guarda video silencioso
+    # Guarda video sin audio
     tmp_vid = tempfile.NamedTemporaryFile(suffix=".mp4", delete=False)
     with imageio.get_writer(tmp_vid.name, fps=fps, codec="libx264") as writer:
         for fr in frames:
             writer.append_data(fr)
     final_video = tmp_vid.name
 
-    # Procesa audio si corresponde
+    # Procesa audio si se subió un archivo o URL
     if audio_file or youtube_url:
-        st.info("Procesando audio...")
-        tmp_audio = tempfile.NamedTemporaryFile(suffix=".mp3", delete=False).name
         try:
-            # Intentar importar las librerías necesarias
-            import moviepy.editor as mpe
-            from pytube import YouTube  # para validar
-        except ImportError as e:
-            st.error(f"Falta la dependencia: {e.name}. Asegúrate de tenerla en requirements.txt.")
-        else:
-            try:
-                # Obtener audio
-                if youtube_url:
-                    tmp_audio = download_audio_from_youtube(youtube_url, tmp_audio)
-                elif audio_file:
-                    with open(tmp_audio, 'wb') as out:
-                        out.write(audio_file.read())
-                # Combinar video y audio
-                video_clip = mpe.VideoFileClip(final_video)
-                audio_clip = mpe.AudioFileClip(tmp_audio).subclip(0, video_clip.duration)
-                video_with_audio = video_clip.set_audio(audio_clip)
-                tmp_out = tempfile.NamedTemporaryFile(suffix=".mp4", delete=False)
-                video_with_audio.write_videofile(tmp_out.name, codec="libx264", audio_codec="aac")
-                final_video = tmp_out.name
-            except Exception as e:
-                st.error(f"Error procesando audio: {e}")
+            st.info("Procesando audio…")
+            # Descarga o usa archivo
+            tmp_audio = tempfile.NamedTemporaryFile(suffix=".mp3", delete=False).name
+            if youtube_url:
+                tmp_audio = download_audio_from_youtube(youtube_url, tmp_audio)
+            else:
+                with open(tmp_audio, 'wb') as out:
+                    out.write(audio_file.read())
 
+            # Combina con MoviePy
+            from moviepy.editor import VideoFileClip, AudioFileClip
+            video_clip = VideoFileClip(final_video)
+            audio_clip = AudioFileClip(tmp_audio).subclip(0, video_clip.duration)
+            video_with_audio = video_clip.set_audio(audio_clip)
+            tmp_out = tempfile.NamedTemporaryFile(suffix=".mp4", delete=False)
+            video_with_audio.write_videofile(tmp_out.name, codec="libx264", audio_codec="aac")
+            final_video = tmp_out.name
+        except Exception as e:
+            st.warning(f"No se pudo procesar audio; se generará video sin sonido. (Error: {e})")
+
+    # Mostrar y ofrecer descarga
     st.success("¡Listo!")
     st.video(final_video)
     with open(final_video, "rb") as f:
         st.download_button("Descargar MP4", f, "morph_con_audio.mp4", "video/mp4")
 
+    # Preview de imágenes
     st.caption("Vista previa de las imágenes inicial y final")
     st.image([img1, img2], caption=["Inicial", "Final"], width=260)
