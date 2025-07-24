@@ -3,5 +3,5 @@ Pillow
 numpy
 imageio
 imageio-ffmpeg
-moviepy
+moviepy.editor
 pytube
