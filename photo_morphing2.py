@@ -4,7 +4,14 @@ from PIL import Image
 import imageio.v2 as imageio
 import tempfile
 import os
-import importlib
+
+# Comprueba si las librerías de audio están disponibles
+try:
+    import moviepy.editor as mpe
+    from pytube import YouTube
+    AUDIO_ENABLED = True
+except ImportError:
+    AUDIO_ENABLED = False
 
 st.set_page_config(page_title="Morphing simple (crossfade)", page_icon="🎬")
 st.title("Morphing entre dos imágenes (crossfade) con audio opcional")
@@ -18,9 +25,13 @@ with col2:
 
 # --- Opciones de audio ---
 with st.expander("Audio / Música (opcional)"):
-    audio_file = st.file_uploader("Sube un archivo de audio (mp3, wav)", type=["mp3", "wav"])
-    youtube_url = st.text_input("O pega un link de YouTube para extraer audio")
-    st.caption("Nota: para procesar audio, la app debe tener instalados moviepy y pytube en requirements.txt.")
+    if not AUDIO_ENABLED:
+        st.warning("La funcionalidad de audio requiere instalar moviepy y pytube en requirements.txt.")
+    audio_file = None
+    youtube_url = None
+    if AUDIO_ENABLED:
+        audio_file = st.file_uploader("Sube un archivo de audio (mp3, wav)", type=["mp3", "wav"])
+        youtube_url = st.text_input("O pega un link de YouTube para extraer audio")
 
 # --- Parámetros de morphing ---
 with st.expander("Parámetros de video"):
@@ -33,17 +44,15 @@ with st.expander("Parámetros de video"):
 
 generate = st.button("Generar video", disabled=not (f1 and f2))
 
-def download_audio_from_youtube(youtube_url, output_path):
-    from pytube import YouTube
-    yt = YouTube(youtube_url)
+def download_audio_from_youtube(url, output_path):
+    yt = YouTube(url)
     audio_stream = yt.streams.filter(only_audio=True).order_by('abr').desc().first()
-    temp_path = tempfile.NamedTemporaryFile(suffix=".mp4", delete=False).name
-    audio_stream.download(output_path=os.path.dirname(temp_path), filename=os.path.basename(temp_path))
-    import moviepy.editor as mpe
-    clip = mpe.AudioFileClip(temp_path)
+    temp_file = tempfile.NamedTemporaryFile(suffix=".mp4", delete=False).name
+    audio_stream.download(output_path=os.path.dirname(temp_file), filename=os.path.basename(temp_file))
+    clip = mpe.AudioFileClip(temp_file)
     clip.write_audiofile(output_path)
     clip.close()
-    os.remove(temp_path)
+    os.remove(temp_file)
     return output_path
 
 if generate:
@@ -58,57 +67,48 @@ if generate:
     img1 = img1.resize(base_size, Image.LANCZOS)
     img2 = img2.resize(base_size, Image.LANCZOS)
 
-    img1_np = np.array(img1, dtype=np.float32)
-    img2_np = np.array(img2, dtype=np.float32)
+    arr1 = np.array(img1, dtype=np.float32)
+    arr2 = np.array(img2, dtype=np.float32)
 
     # Genera frames
     frames = []
     prog = st.progress(0)
     for i in range(frame_count):
-        alpha = i / (frame_count - 1)
-        blended = ((1 - alpha) * img1_np + alpha * img2_np).astype(np.uint8)
+        alpha = i / (frame_count - 1) if frame_count > 1 else 1
+        blended = ((1 - alpha) * arr1 + alpha * arr2).astype(np.uint8)
         frames.append(blended)
         prog.progress((i + 1) / frame_count)
 
     # Guarda video silencioso
-    tmp_video = tempfile.NamedTemporaryFile(suffix=".mp4", delete=False)
-    with imageio.get_writer(tmp_video.name, fps=fps, codec="libx264") as writer:
+    tmp_vid = tempfile.NamedTemporaryFile(suffix=".mp4", delete=False)
+    with imageio.get_writer(tmp_vid.name, fps=fps, codec="libx264") as writer:
         for fr in frames:
             writer.append_data(fr)
+    final_video = tmp_vid.name
 
-    final_video_path = tmp_video.name
+    # Merge audio si corresponde
+    if AUDIO_ENABLED and (youtube_url or audio_file):
+        st.info("Procesando audio…")
+        tmp_audio = tempfile.NamedTemporaryFile(suffix=".mp3", delete=False).name
+        try:
+            if youtube_url:
+                tmp_audio = download_audio_from_youtube(youtube_url, tmp_audio)
+            elif audio_file:
+                with open(tmp_audio, 'wb') as out:
+                    out.write(audio_file.read())
 
-    # Merge con audio si se subió o pegó link
-    if audio_file or youtube_url:
-        # Verifica que moviepy y pytube estén disponibles
-        mp_spec = importlib.util.find_spec("moviepy.editor")
-        pt_spec = importlib.util.find_spec("pytube")
-        if mp_spec is None or pt_spec is None:
-            st.error("Para procesar audio necesitas instalar moviepy y pytube en requirements.txt.")
-        else:
-            st.info("Procesando audio…")
-            tmp_audio = tempfile.NamedTemporaryFile(suffix=".mp3", delete=False).name
-            try:
-                if youtube_url:
-                    tmp_audio = download_audio_from_youtube(youtube_url, tmp_audio)
-                else:
-                    with open(tmp_audio, 'wb') as out:
-                        out.write(audio_file.read())
-
-                import moviepy.editor as mpe
-                # Combina video y audio
-                video_clip = mpe.VideoFileClip(final_video_path)
-                audio_clip = mpe.AudioFileClip(tmp_audio).subclip(0, video_clip.duration)
-                video_with_audio = video_clip.set_audio(audio_clip)
-                tmp_out = tempfile.NamedTemporaryFile(suffix=".mp4", delete=False)
-                video_with_audio.write_videofile(tmp_out.name, codec="libx264", audio_codec="aac")
-                final_video_path = tmp_out.name
-            except Exception as e:
-                st.error(f"Error al procesar audio: {e}")
+            video_clip = mpe.VideoFileClip(final_video)
+            audio_clip = mpe.AudioFileClip(tmp_audio).subclip(0, video_clip.duration)
+            video_with_audio = video_clip.set_audio(audio_clip)
+            tmp_out = tempfile.NamedTemporaryFile(suffix=".mp4", delete=False)
+            video_with_audio.write_videofile(tmp_out.name, codec="libx264", audio_codec="aac")
+            final_video = tmp_out.name
+        except Exception as e:
+            st.error(f"Error procesando audio: {e}")
 
     st.success("¡Listo!")
-    st.video(final_video_path)
-    with open(final_video_path, "rb") as f:
+    st.video(final_video)
+    with open(final_video, "rb") as f:
         st.download_button("Descargar MP4", f, "morph_con_audio.mp4", "video/mp4")
 
     st.caption("Vista previa de las imágenes inicial y final")
