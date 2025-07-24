@@ -23,14 +23,6 @@ with st.expander("Parámetros"):
         width = st.number_input("Ancho", 64, 4000, 768, 16)
         height = st.number_input("Alto", 64, 4000, 1024, 16)
 
-with st.expander("Parámetros"):
-    frame_count = st.slider("Número de fotogramas", 30, 600, 250, 10)
-    fps = st.slider("FPS", 5, 60, 30, 1)
-    auto_size = st.checkbox("Usar tamaño de la primera imagen", True)
-    if not auto_size:
-        width = st.number_input("Ancho", 64, 4000, 768, 16)
-        height = st.number_input("Alto", 64, 4000, 1024, 16)
-
 # Cálculo de duración y despliegue
 duracion = frame_count / fps
 st.markdown(f"**Duración estimada del video:** {duracion:.1f} segundos")
