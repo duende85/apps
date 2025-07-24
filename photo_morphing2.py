@@ -66,7 +66,7 @@ if generate:
         final_path = tmp_vid
 
     except Exception as e:
-        st.error(f"Error al generar video: {e}")
+        st.error(f"Error al generar video: {e}") 
         st.stop()
 
     # Audio
