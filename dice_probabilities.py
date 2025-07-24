@@ -11,7 +11,34 @@ st.markdown("""
     </style>
 """, unsafe_allow_html=True)
 
-# Calculate individual number probabilities
+# Title and description
+st.title("4d6 Dice Combination Probabilities")
+st.write(
+    "Calculate the probability of hitting pairs or triplets of numbers in a custom dice game. "
+    "Adjust filters to explore different combinations."
+)
+
+# All possible 4d6 rolls
+all_rolls = list(itertools.product(range(1, 7), repeat=4))
+
+# For each roll, what are the possible numbers you can pick?
+roll_to_gather = []
+for roll in all_rolls:
+    a, b, c, d = roll
+    pairs = [
+        (a + b, c + d),
+        (a + c, b + d),
+        (a + d, b + c)
+    ]
+    gatherable = set()
+    for p in pairs:
+        gatherable.add(p[0])
+        gatherable.add(p[1])
+    roll_to_gather.append(gatherable)
+
+all_numbers = list(range(2, 13))
+
+# --- NEW: Single number probabilities ---
 number_counts = {n: 0 for n in all_numbers}
 for gatherable in roll_to_gather:
     for n in all_numbers:
@@ -23,7 +50,6 @@ single_probs = {
     for n in all_numbers
 }
 
-# Display single number probabilities on the left
 st.sidebar.markdown("### Single Number Probabilities")
 df_single = pd.DataFrame({
     "Number": list(single_probs.keys()),
@@ -31,33 +57,7 @@ df_single = pd.DataFrame({
 })
 st.sidebar.dataframe(df_single.set_index("Number"), use_container_width=True)
 
-
-st.title("4d6 Dice Combination Probabilities")
-st.write(
-    "Calculate the probability of hitting pairs or triplets of numbers in a custom dice game. "
-    "Adjust filters to explore different combinations."
-)
-
-# All possible 4d6 rolls
-all_rolls = list(itertools.product(range(1,7), repeat=4))
-
-# For each roll, what are the possible numbers you can pick?
-roll_to_gather = []
-for roll in all_rolls:
-    a,b,c,d = roll
-    pairs = [
-        (a+b, c+d),
-        (a+c, b+d),
-        (a+d, b+c)
-    ]
-    gatherable = set()
-    for p in pairs:
-        gatherable.add(p[0])
-        gatherable.add(p[1])
-    roll_to_gather.append(gatherable)
-
-all_numbers = list(range(2, 13))
-
+# Function to calculate combination probabilities
 def calc_probs(combos, roll_to_gather, all_rolls, pow_max=10):
     result = []
     for combo in combos:
@@ -66,7 +66,7 @@ def calc_probs(combos, roll_to_gather, all_rolls, pow_max=10):
             for gatherable in roll_to_gather
         )
         prob = success / len(all_rolls)
-        row = [combo, prob] + [prob**n for n in range(2, pow_max+1)]
+        row = [combo, prob] + [prob**n for n in range(2, pow_max + 1)]
         result.append(row)
     result.sort(key=lambda x: -x[1])
     return result
@@ -93,36 +93,4 @@ min_p, max_p = st.sidebar.slider(
     step=0.01
 )
 
-comb_size = 2 if combo_type.startswith("Pairs") else 3
-combos = list(itertools.combinations(all_numbers, comb_size))
-
-# Apply include filter
-if must_include:
-    combos = [
-        combo for combo in combos
-        if all(num in combo for num in must_include)
-    ]
-
-# Apply exclude filter
-if must_exclude:
-    combos = [
-        combo for combo in combos
-        if all(num not in combo for num in must_exclude)
-    ]
-
-results = calc_probs(combos, roll_to_gather, all_rolls)
-
-# Convert to DataFrame for better display and filtering
-columns = ["Numbers", "P"] + [f"P^{i}" for i in range(2, 11)]
-df = pd.DataFrame(results, columns=columns)
-
-# Apply probability filter
-df = df[(df["P"] >= min_p) & (df["P"] <= max_p)]
-
-# Format numbers for nicer display
-df["Numbers"] = df["Numbers"].apply(lambda x: ", ".join(map(str, x)))
-for col in df.columns[1:]:
-    df[col] = df[col].apply(lambda x: f"{x:.2f}")
-
-# Display table larger vertically
-st.dataframe(df.reset_index(drop=True), use_container_width=True, height=700)
+# Build
