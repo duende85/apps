@@ -97,7 +97,7 @@ if generate:
         for fr in frames:
             writer.append_data(fr)
 
-    final_video_path = tmp_video.name
+    final_video_path = tmp_video.name 
 
     # Merge con audio si está habilitado y hay input
     if AUDIO_ENABLED and (audio_file or youtube_url):
