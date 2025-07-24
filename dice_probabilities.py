@@ -11,7 +11,6 @@ st.markdown("""
     </style>
 """, unsafe_allow_html=True)
 
-# Title and description
 st.title("4d6 Dice Combination Probabilities")
 st.write(
     "Calculate the probability of hitting pairs or triplets of numbers in a custom dice game. "
@@ -39,7 +38,11 @@ for roll in all_rolls:
 all_numbers = list(range(2, 13))
 
 # Sidebar filters
-combo_type = st.sidebar.radio("Show combinations of...", ("Pairs (2 numbers)", "Triplets (3 numbers)"))
+combo_type = st.sidebar.radio(
+    "Show combinations of...",
+    ("Pairs (2 numbers)", "Triplets (3 numbers)"),
+    index=1  # Triplets selected by default
+)
 
 must_include = st.sidebar.multiselect(
     "Show combinations that contain (optional):",
@@ -51,13 +54,6 @@ must_exclude = st.sidebar.multiselect(
     "Exclude combinations that contain (optional):",
     options=all_numbers,
     default=[]
-)
-
-min_p, max_p = st.sidebar.slider(
-    "Probability range (P):",
-    min_value=0.0, max_value=1.0,
-    value=(0.0, 1.0),
-    step=0.01
 )
 
 # Build and filter combinations
@@ -115,9 +111,6 @@ st.sidebar.dataframe(df_single.set_index("Number"), use_container_width=True)
 # Format results into DataFrame
 columns = ["Numbers", "P"] + [f"P^{i}" for i in range(2, 11)]
 df = pd.DataFrame(results, columns=columns)
-
-# Apply probability filter
-df = df[(df["P"] >= min_p) & (df["P"] <= max_p)]
 
 # Clean display
 df["Numbers"] = df["Numbers"].apply(lambda x: ", ".join(map(str, x)))
