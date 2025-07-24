@@ -5,3 +5,4 @@ imageio
 imageio-ffmpeg
 moviepy
 pytube
+moviepy.editor
