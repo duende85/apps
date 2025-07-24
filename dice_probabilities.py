@@ -11,6 +11,27 @@ st.markdown("""
     </style>
 """, unsafe_allow_html=True)
 
+# Calculate individual number probabilities
+number_counts = {n: 0 for n in all_numbers}
+for gatherable in roll_to_gather:
+    for n in all_numbers:
+        if n in gatherable:
+            number_counts[n] += 1
+
+single_probs = {
+    n: number_counts[n] / len(roll_to_gather)
+    for n in all_numbers
+}
+
+# Display single number probabilities on the left
+st.sidebar.markdown("### Single Number Probabilities")
+df_single = pd.DataFrame({
+    "Number": list(single_probs.keys()),
+    "P": [f"{p:.2f}" for p in single_probs.values()]
+})
+st.sidebar.dataframe(df_single.set_index("Number"), use_container_width=True)
+
+
 st.title("4d6 Dice Combination Probabilities")
 st.write(
     "Calculate the probability of hitting pairs or triplets of numbers in a custom dice game. "
