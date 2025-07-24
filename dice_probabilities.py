@@ -21,7 +21,7 @@ st.write(
 # All possible 4d6 rolls
 all_rolls = list(itertools.product(range(1, 7), repeat=4))
 
-# For each roll, what are the possible numbers you can pick?
+# For each roll, determine the possible numbers that can be gathered
 roll_to_gather = []
 for roll in all_rolls:
     a, b, c, d = roll
@@ -37,39 +37,6 @@ for roll in all_rolls:
     roll_to_gather.append(gatherable)
 
 all_numbers = list(range(2, 13))
-
-# --- NEW: Single number probabilities ---
-number_counts = {n: 0 for n in all_numbers}
-for gatherable in roll_to_gather:
-    for n in all_numbers:
-        if n in gatherable:
-            number_counts[n] += 1
-
-single_probs = {
-    n: number_counts[n] / len(roll_to_gather)
-    for n in all_numbers
-}
-
-st.sidebar.markdown("### Single Number Probabilities")
-df_single = pd.DataFrame({
-    "Number": list(single_probs.keys()),
-    "P": [f"{p:.2f}" for p in single_probs.values()]
-})
-st.sidebar.dataframe(df_single.set_index("Number"), use_container_width=True)
-
-# Function to calculate combination probabilities
-def calc_probs(combos, roll_to_gather, all_rolls, pow_max=10):
-    result = []
-    for combo in combos:
-        success = sum(
-            any(num in gatherable for num in combo)
-            for gatherable in roll_to_gather
-        )
-        prob = success / len(all_rolls)
-        row = [combo, prob] + [prob**n for n in range(2, pow_max + 1)]
-        result.append(row)
-    result.sort(key=lambda x: -x[1])
-    return result
 
 # Sidebar filters
 combo_type = st.sidebar.radio("Show combinations of...", ("Pairs (2 numbers)", "Triplets (3 numbers)"))
@@ -93,4 +60,69 @@ min_p, max_p = st.sidebar.slider(
     step=0.01
 )
 
-# Build
+# Build and filter combinations
+comb_size = 2 if combo_type.startswith("Pairs") else 3
+combos = list(itertools.combinations(all_numbers, comb_size))
+
+if must_include:
+    combos = [
+        combo for combo in combos
+        if all(num in combo for num in must_include)
+    ]
+
+if must_exclude:
+    combos = [
+        combo for combo in combos
+        if all(num not in combo for num in must_exclude)
+    ]
+
+# Function to calculate combo probabilities AND number frequencies
+def calc_probs(combos, roll_to_gather, all_rolls, pow_max=10):
+    results = []
+    number_hits = {n: 0 for n in all_numbers}
+
+    for combo in combos:
+        success_count = 0
+        for gatherable in roll_to_gather:
+            if any(num in gatherable for num in combo):
+                success_count += 1
+                for num in combo:
+                    if num in gatherable:
+                        number_hits[num] += 1
+        prob = success_count / len(all_rolls)
+        row = [combo, prob] + [prob ** n for n in range(2, pow_max + 1)]
+        results.append(row)
+
+    results.sort(key=lambda x: -x[1])
+
+    # Normalize single number hits
+    total_rolls = len(all_rolls)
+    number_probs = {n: number_hits[n] / total_rolls for n in all_numbers}
+
+    return results, number_probs
+
+# Compute results and dynamic single number probabilities
+results, number_probs = calc_probs(combos, roll_to_gather, all_rolls)
+
+# Format and display single number probabilities
+st.sidebar.markdown("### Dynamic Single Number Probabilities")
+df_single = pd.DataFrame({
+    "Number": list(number_probs.keys()),
+    "P": [f"{p:.2f}" for p in number_probs.values()]
+})
+st.sidebar.dataframe(df_single.set_index("Number"), use_container_width=True)
+
+# Format results into DataFrame
+columns = ["Numbers", "P"] + [f"P^{i}" for i in range(2, 11)]
+df = pd.DataFrame(results, columns=columns)
+
+# Apply probability filter
+df = df[(df["P"] >= min_p) & (df["P"] <= max_p)]
+
+# Clean display
+df["Numbers"] = df["Numbers"].apply(lambda x: ", ".join(map(str, x)))
+for col in df.columns[1:]:
+    df[col] = df[col].apply(lambda x: f"{x:.2f}")
+
+# Show main table
+st.dataframe(df.reset_index(drop=True), use_container_width=True, height=700)
