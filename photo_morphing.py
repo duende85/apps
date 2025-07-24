@@ -37,8 +37,6 @@ st.markdown(f"**Duración estimada del video:** {duracion:.1f} segundos")
 
 generate = st.button("Generar video", disabled=not (f1 and f2))
 
-generate = st.button("Generar video", disabled=not (f1 and f2))
-
 if generate:
     if not (f1 and f2):
         st.error("Sube ambas imágenes.")
