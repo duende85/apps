@@ -17,10 +17,10 @@ st.markdown("""
 
 
 st.title("4d6 Dice Combination Probabilities")
-st.write(
-    "Calculate the probability of hitting pairs or triplets of numbers in a custom dice game. "
-    "Adjust filters to explore different combinations."
-)
+#st.write(
+ #   "Calculate the probability of hitting pairs or triplets of numbers in a custom dice game. "
+  #  "Adjust filters to explore different combinations."
+#)
 
 # All possible 4d6 rolls
 all_rolls = list(itertools.product(range(1, 7), repeat=4))
