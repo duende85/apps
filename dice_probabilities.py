@@ -2,11 +2,13 @@ import streamlit as st
 import itertools
 import pandas as pd
 
-# Remove top padding via CSS
 st.markdown("""
     <style>
         .block-container {
             padding-top: 1rem;
+        }
+        section[data-testid="stSidebar"] > div:first-child {
+            padding-top: 0.5rem;
         }
     </style>
 """, unsafe_allow_html=True)
