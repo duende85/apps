@@ -107,9 +107,9 @@ results, number_probs = calc_probs(combos, roll_to_gather, all_rolls,pow_max = 2
 st.sidebar.markdown("### Dynamic Single Number Probabilities")
 df_single = pd.DataFrame({
     "Number": list(number_probs.keys()),
-    "P": [f"{p:.2f}" for p in number_probs.values()]
+    "P": [f"{p:.1f}" for p in number_probs.values()]
 })
-st.sidebar.dataframe(df_single.set_index("Number"), use_container_width=True)
+st.sidebar.dataframe(df_single.set_index("Number"), use_container_width=True, height=330)
 
 # Format results into DataFrame
 columns = ["Numbers", "P"] + [f"P^{i}" for i in range(2, 21)]
