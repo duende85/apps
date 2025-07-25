@@ -41,8 +41,8 @@ for roll in all_rolls:
 all_numbers = list(range(2, 13))
 
 # Sidebar filters
-combo_type = st.sidebar.radio(
-    "Combinations",("Pairs (2 numbers)","Triplets (3 numbers)"),
+combo_type = st.radio(
+    "Combinations",("Pairs","Triplets"),
     index=1  # Triplets selected by default
 )
 
