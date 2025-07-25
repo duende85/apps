@@ -4,11 +4,8 @@ import pandas as pd
 
 st.markdown("""
     <style>
-        .block-container {
-            padding-top: 1rem;
-        }
         section[data-testid="stSidebar"] > div:first-child {
-            padding-top: 0.5rem;
+            padding-top: 1.5rem;
         }
     </style>
 """, unsafe_allow_html=True)
