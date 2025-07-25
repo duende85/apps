@@ -15,8 +15,7 @@ st.markdown("""
     </style>
 """, unsafe_allow_html=True)
 
-
-st.title("4d6 Dice Combination Probabilities")
+#st.title("4d6 Dice Combination Probabilities")
 #st.write(
  #   "Calculate the probability of hitting pairs or triplets of numbers in a custom dice game. "
   #  "Adjust filters to explore different combinations."
