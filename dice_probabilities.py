@@ -109,7 +109,7 @@ df_single = pd.DataFrame({
     "Number": list(number_probs.keys()),
     "P": [f"{p:.1f}" for p in number_probs.values()]
 })
-st.sidebar.dataframe(df_single.set_index("Number"), use_container_width=True, height=330)
+st.sidebar.dataframe(df_single.set_index("Number"), use_container_width=True, height=600)
 
 # Format results into DataFrame
 columns = ["Numbers", "P"] + [f"P^{i}" for i in range(2, 21)]
