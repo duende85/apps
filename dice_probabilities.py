@@ -97,7 +97,7 @@ def calc_probs(combos, roll_to_gather, all_rolls, pow_max=10):
     return results, number_probs
 
 # Compute results and dynamic single number probabilities
-results, number_probs = calc_probs(combos, roll_to_gather, all_rolls)
+results, number_probs = calc_probs(combos, roll_to_gather, all_rolls,pow_max = 20)
 
 # Format and display single number probabilities
 st.sidebar.markdown("### Dynamic Single Number Probabilities")
@@ -108,7 +108,7 @@ df_single = pd.DataFrame({
 st.sidebar.dataframe(df_single.set_index("Number"), use_container_width=True)
 
 # Format results into DataFrame
-columns = ["Numbers", "P"] + [f"P^{i}" for i in range(2, 11)]
+columns = ["Numbers", "P"] + [f"P^{i}" for i in range(2, 21)]
 df = pd.DataFrame(results, columns=columns)
 
 # Clean display
