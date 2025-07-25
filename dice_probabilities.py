@@ -2,6 +2,8 @@ import streamlit as st
 import itertools
 import pandas as pd
 
+st.set_page_config(layout="wide")
+
 st.markdown("""
     <style>
         .block-container {
