@@ -39,7 +39,7 @@ all_numbers = list(range(2, 13))
 
 # Sidebar filters
 combo_type = st.sidebar.radio(
-    "",("Triplets (3 numbers)","Pairs (2 numbers)"),
+    "Combinations",("Pairs (2 numbers)","Triplets (3 numbers)"),
     index=1  # Triplets selected by default
 )
 
