@@ -118,9 +118,10 @@ for col in df.columns[1:]:
 
 # Show main table
 styled_df = df.style.background_gradient(
-    subset=df.columns[1:],  # Apply shading to all P, P^2, ..., P^15 columns
-    cmap="Greens",          # Light, non-intrusive color map
-    vmin=0, vmax=1          # Ensure consistent color scaling
+    subset=df.columns[1:],  # Apply to P, P^2, ..., P^15
+    cmap="Greens",
+    axis=None,
+    gmap=None
 )
 
 st.dataframe(styled_df, use_container_width=True, height=700)
