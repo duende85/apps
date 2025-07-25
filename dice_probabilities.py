@@ -117,4 +117,11 @@ for col in df.columns[1:]:
     df[col] = df[col].apply(lambda x: f"{x:.2f}")
 
 # Show main table
-st.dataframe(df.reset_index(drop=True), use_container_width=True, height=700)
+styled_df = df.style.background_gradient(
+    subset=df.columns[1:],  # Apply shading to all P, P^2, ..., P^15 columns
+    cmap="Greens",          # Light, non-intrusive color map
+    vmin=0, vmax=1          # Ensure consistent color scaling
+)
+
+st.dataframe(styled_df, use_container_width=True, height=700)
+#st.dataframe(df.reset_index(drop=True), use_container_width=True, height=700)
