@@ -23,7 +23,7 @@ def recommend_bid(table_cards, seen_cards=[]):
     if score >= 12:
         return 4
     elif score >= 8:
-        return 2
+        return 2  # Avoid 3 due to same refund
     elif score >= 4:
         return 1
     else:
